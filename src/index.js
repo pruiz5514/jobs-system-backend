@@ -1,4 +1,5 @@
 import express from 'express';
+import cors from 'cors';
 import { sequelize } from './database/sequalize.js';
 import { routerApi } from './routes/index.js';
 import errorHandler from './middleware/error.handler.js';
@@ -12,6 +13,8 @@ const app = express()
 const PORT  = process.env.PORT || 3000;
 
 app.use(express.json())
+
+app.use(cors());
 
 routerApi(app)
 app.use(errorHandler);

@@ -25,7 +25,7 @@ class VacanciesService extends BaseService{
         return super.create(newVancancy)
     }
 
-    async findAll(page=0, size=0){
+    async findAll(page=0, size=10){
         const offset = page * size;
 
         const {count, rows} = await this.model.findAndCountAll({
@@ -70,6 +70,20 @@ class VacanciesService extends BaseService{
             first: page === 0,
             empty: rows.length === 0
         }
+    }
+
+    async findById(id){
+        const vacancy = await this.model.findByPk(id,{
+            attributes: { exclude: ['company_id'] },
+            include:[
+                {
+                    model: Companies,
+                    as: 'company',
+                }
+            ]
+        })
+
+        return vacancy
     }
 }
 

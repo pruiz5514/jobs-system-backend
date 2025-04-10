@@ -33,5 +33,16 @@ router.get('/',
         }
     }
 )
+router.get('/:id', 
+    async (req, res, next) => {
+        try{
+            const {id} = req.params
+            const vacancy = await service.findById(id)
+            return res.status(200).json(vacancy)
+        }catch(error){
+            next(error)
+        }
+    }
+)
 
 export default router

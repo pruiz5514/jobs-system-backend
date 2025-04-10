@@ -24,8 +24,22 @@ router.post('/',
 router.get('/', 
     async (req, res, next) => {
         try{
-            const companies = await service.find();
+            const page = parseInt(req.query.page) || 0;
+            const size = parseInt(req.query.size) || 10;
+            const companies = await service.findAll(page, size);
             return res.status(200).json(companies)
+        }catch(error){
+            next(error)
+        }
+    }
+)
+
+router.get('/:id', 
+    async(req, res, next) => {
+        try{
+            const {id} = req.params
+            const company = await service.findOne(id) 
+            return res.status(200).json(company)
         }catch(error){
             next(error)
         }
