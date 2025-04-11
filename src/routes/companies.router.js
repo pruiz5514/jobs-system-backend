@@ -26,7 +26,9 @@ router.get('/',
         try{
             const page = parseInt(req.query.page) || 0;
             const size = parseInt(req.query.size) || 10;
-            const companies = await service.findAll(page, size);
+            const name = req.query.name || ''
+
+            const companies = await service.findAll(page, size, name);
             return res.status(200).json(companies)
         }catch(error){
             next(error)

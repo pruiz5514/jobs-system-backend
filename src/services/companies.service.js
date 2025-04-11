@@ -1,4 +1,5 @@
 import { ValidationError } from "sequelize";
+import { Op } from 'sequelize';
 import { Companies } from "../database/models/companies.model.js";
 import BaseService from "./base.service.js";
 import { Vacancies } from "../database/models/vacancies.model.js";
@@ -24,10 +25,19 @@ class CompaniesService extends BaseService{
         return super.create(newCompany)
     }
 
-    async findAll(page=0, size=10){
+    async findAll(page, size, name){
         const offset = page * size;
 
-        const {count, rows} = await this.model.findAndCountAll({
+        const whereClause = name
+        ? {
+            name: {
+                [Op.iLike]: `%${name}%` 
+            }
+        }
+        : {};
+
+        const {rows} = await this.model.findAndCountAll({
+            where: whereClause,
             include: [
                     {
                     model: Vacancies,
@@ -37,6 +47,7 @@ class CompaniesService extends BaseService{
             limit: size
         });
 
+        const count = await this.model.count({ where: whereClause })
         const totalPages = Math.ceil(count / size);
         
         return {
