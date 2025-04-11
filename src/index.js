@@ -24,7 +24,7 @@ const main = () =>{
         app.listen(PORT, async ()=>{
             await sequelize.sync({alter: true});
             console.log('Database connected');
-            console.log(`Server is running on ${process.env.BACK_HOST}`)
+            // console.log(`Server is running on ${process.env.BACK_HOST}`)
         })
     }catch(error){
         console.log(error)
