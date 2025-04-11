@@ -10,6 +10,7 @@ import './database/models/index.js'
 
 
 const app = express()
+const PORT  = process.env.PORT;
 
 app.use(express.json())
 
