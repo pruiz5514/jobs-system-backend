@@ -10,7 +10,6 @@ import './database/models/index.js'
 
 
 const app = express()
-const PORT  = process.env.PORT || 3000;
 
 app.use(express.json())
 
@@ -24,7 +23,7 @@ const main = () =>{
         app.listen(PORT, async ()=>{
             await sequelize.sync({alter: true});
             console.log('Database connected');
-            console.log(`Server is running on http://localhost:${PORT}`)
+            console.log(`Server is running on ${process.env.BACK_HOST}`)
         })
     }catch(error){
         console.log(error)
