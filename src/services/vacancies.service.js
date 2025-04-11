@@ -44,8 +44,8 @@ class VacanciesService extends BaseService{
         
         return {
             content: rows,
-            pegeable: {
-                pageNummber: page,
+            pageable: {
+                pageNumber: page,
                 pageSize: size,
                 sort: {
                     sorted: false,

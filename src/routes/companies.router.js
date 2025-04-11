@@ -46,4 +46,29 @@ router.get('/:id',
     }
 )
 
+router.put('/:id', 
+    async(req, res, next) => {
+        try{
+            const {id} = req.params;
+            const data = req.body
+            const companyEdited = await service.update(id, data)
+            return res.status(200).json(companyEdited)
+        }catch(error){
+            next(error)
+        }
+    }
+)
+
+router.delete('/:id', 
+    async (req, res, next) => {
+        try{
+            const {id} = req.params;
+            await service.delete(id)
+            return res.status(200).json({message:"Deleted it"})
+        }catch(error){
+            next(error)
+        }
+    }
+)
+
 export default router
